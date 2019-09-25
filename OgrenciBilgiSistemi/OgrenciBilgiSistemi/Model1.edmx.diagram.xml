@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8aae79947a4c42fabc695c5c071c2d7e" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="OBSModel.Bolum" Width="1.5" PointX="0.5" PointY="5.25" />
+        <EntityTypeShape EntityType="OBSModel.Ders" Width="1.5" PointX="4.25" PointY="2.125" />
+        <EntityTypeShape EntityType="OBSModel.Ogrenci" Width="1.5" PointX="2.875" PointY="9.875" />
+        <EntityTypeShape EntityType="OBSModel.Ogretmen" Width="1.5" PointX="3.5" PointY="5.75" />
+        <EntityTypeShape EntityType="OBSModel.Ogretmen_Ogrenci_Ders" Width="1.5" PointX="7" PointY="4.75" />
+        <EntityTypeShape EntityType="OBSModel.User" Width="1.5" PointX="6.75" PointY="8.875" />
+        <AssociationConnector Association="OBSModel.FK_Ders_Bolum" />
+        <AssociationConnector Association="OBSModel.FK_Ogrenci_Bolum" />
+        <AssociationConnector Association="OBSModel.FK_Ogretmen_Bolum" />
+        <AssociationConnector Association="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ders" />
+        <AssociationConnector Association="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ogrenci" />
+        <AssociationConnector Association="OBSModel.FK_User_Ogrenci" />
+        <AssociationConnector Association="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ogretmen" />
+        <AssociationConnector Association="OBSModel.FK_User_Ogretmen" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

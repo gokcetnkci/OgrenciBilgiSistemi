@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bolum">
+    <Key>
+      <PropertyRef Name="BolumId" />
+    </Key>
+    <Property Name="BolumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BolumAdi" Type="nvarchar(max)" />
+    <Property Name="FakulteAdi" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Ders">
+    <Key>
+      <PropertyRef Name="DersId" />
+    </Key>
+    <Property Name="DersId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DersAdi" Type="nvarchar(max)" />
+    <Property Name="DersKodu" Type="nchar" MaxLength="10" />
+    <Property Name="Kredi" Type="int" />
+    <Property Name="BolumId" Type="int" />
+    <Property Name="AktifPasif" Type="smallint" />
+  </EntityType>
+  <EntityType Name="Ogrenci">
+    <Key>
+      <PropertyRef Name="OgrId" />
+    </Key>
+    <Property Name="OgrId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OgrNo" Type="int" />
+    <Property Name="Ad" Type="nvarchar(max)" />
+    <Property Name="Soyad" Type="nvarchar(max)" />
+    <Property Name="Tc" Type="nvarchar(max)" />
+    <Property Name="BolumId" Type="int" />
+    <Property Name="KayityapanID" Type="int" />
+    <Property Name="KayitYapilantarih" Type="date" />
+    <Property Name="DogumTarih" Type="date" />
+    <Property Name="Cinsiyet" Type="smallint" />
+    <Property Name="AktifPasif" Type="smallint" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Ogretmen">
+    <Key>
+      <PropertyRef Name="OgretmenId" />
+    </Key>
+    <Property Name="OgretmenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OgretmenAdi" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="BolumId" Type="int" />
+  </EntityType>
+  <EntityType Name="Ogretmen_Ogrenci_Ders">
+    <Key>
+      <PropertyRef Name="Ogretmen_Ogrenci_DersID" />
+    </Key>
+    <Property Name="Ogretmen_Ogrenci_DersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ogrt_Ogr_ID" Type="int" />
+    <Property Name="DersID" Type="int" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Vize1" Type="int" />
+    <Property Name="Vize2" Type="int" />
+    <Property Name="Final" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="Ogrt_ogrID" Type="int" />
+    <Property Name="Type" Type="int" />
+  </EntityType>
+  <Association Name="FK_Ders_Bolum">
+    <End Role="Bolum" Type="Self.Bolum" Multiplicity="0..1" />
+    <End Role="Ders" Type="Self.Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ders">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogrenci_Bolum">
+    <End Role="Bolum" Type="Self.Bolum" Multiplicity="0..1" />
+    <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ogrenci">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogrenci_Ogretmen">
+    <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="0..1" />
+    <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogretmen">
+        <PropertyRef Name="OgretmenId" />
+      </Principal>
+      <Dependent Role="Ogrenci">
+        <PropertyRef Name="KayityapanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Bolum">
+    <End Role="Bolum" Type="Self.Bolum" Multiplicity="0..1" />
+    <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ogretmen">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Ogrenci_Ders_Ders">
+    <End Role="Ders" Type="Self.Ders" Multiplicity="0..1" />
+    <End Role="Ogretmen_Ogrenci_Ders" Type="Self.Ogretmen_Ogrenci_Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ders">
+        <PropertyRef Name="DersId" />
+      </Principal>
+      <Dependent Role="Ogretmen_Ogrenci_Ders">
+        <PropertyRef Name="DersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Ogrenci_Ders_Ogretmen">
+    <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="0..1" />
+    <End Role="Ogretmen_Ogrenci_Ders" Type="Self.Ogretmen_Ogrenci_Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogretmen">
+        <PropertyRef Name="OgretmenId" />
+      </Principal>
+      <Dependent Role="Ogretmen_Ogrenci_Ders">
+        <PropertyRef Name="Ogrt_Ogr_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OBSModelStoreContainer">
+    <EntitySet Name="Bolum" EntityType="Self.Bolum" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ders" EntityType="Self.Ders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ogretmen" EntityType="Self.Ogretmen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ogretmen_Ogrenci_Ders" EntityType="Self.Ogretmen_Ogrenci_Ders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Ders_Bolum" Association="Self.FK_Ders_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ders" EntitySet="Ders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogrenci_Bolum" Association="Self.FK_Ogrenci_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogrenci_Ogretmen" Association="Self.FK_Ogrenci_Ogretmen">
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Bolum" Association="Self.FK_Ogretmen_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Ogrenci_Ders_Ders" Association="Self.FK_Ogretmen_Ogrenci_Ders_Ders">
+      <End Role="Ders" EntitySet="Ders" />
+      <End Role="Ogretmen_Ogrenci_Ders" EntitySet="Ogretmen_Ogrenci_Ders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Ogrenci_Ders_Ogretmen" Association="Self.FK_Ogretmen_Ogrenci_Ders_Ogretmen">
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+      <End Role="Ogretmen_Ogrenci_Ders" EntitySet="Ogretmen_Ogrenci_Ders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

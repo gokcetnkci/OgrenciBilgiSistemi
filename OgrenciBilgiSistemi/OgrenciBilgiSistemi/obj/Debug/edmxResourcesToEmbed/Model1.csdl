@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="OBSEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bolum" EntityType="OBSModel.Bolum" />
+    <EntitySet Name="Ders" EntityType="OBSModel.Ders" />
+    <EntitySet Name="Ogrenci" EntityType="OBSModel.Ogrenci" />
+    <EntitySet Name="Ogretmen" EntityType="OBSModel.Ogretmen" />
+    <EntitySet Name="Ogretmen_Ogrenci_Ders" EntityType="OBSModel.Ogretmen_Ogrenci_Ders" />
+    <EntitySet Name="sysdiagrams" EntityType="OBSModel.sysdiagrams" />
+    <EntitySet Name="User" EntityType="OBSModel.User" />
+    <AssociationSet Name="FK_Ders_Bolum" Association="OBSModel.FK_Ders_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ders" EntitySet="Ders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogrenci_Bolum" Association="OBSModel.FK_Ogrenci_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Bolum" Association="OBSModel.FK_Ogretmen_Bolum">
+      <End Role="Bolum" EntitySet="Bolum" />
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Ogrenci_Ders_Ders" Association="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ders">
+      <End Role="Ders" EntitySet="Ders" />
+      <End Role="Ogretmen_Ogrenci_Ders" EntitySet="Ogretmen_Ogrenci_Ders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogrenci_Ogretmen" Association="OBSModel.FK_Ogrenci_Ogretmen">
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogretmen_Ogrenci_Ders_Ogretmen" Association="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ogretmen">
+      <End Role="Ogretmen" EntitySet="Ogretmen" />
+      <End Role="Ogretmen_Ogrenci_Ders" EntitySet="Ogretmen_Ogrenci_Ders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bolum">
+    <Key>
+      <PropertyRef Name="BolumId" />
+    </Key>
+    <Property Name="BolumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BolumAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FakulteAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Ders" Relationship="OBSModel.FK_Ders_Bolum" FromRole="Bolum" ToRole="Ders" />
+    <NavigationProperty Name="Ogrenci" Relationship="OBSModel.FK_Ogrenci_Bolum" FromRole="Bolum" ToRole="Ogrenci" />
+    <NavigationProperty Name="Ogretmen" Relationship="OBSModel.FK_Ogretmen_Bolum" FromRole="Bolum" ToRole="Ogretmen" />
+  </EntityType>
+  <EntityType Name="Ders">
+    <Key>
+      <PropertyRef Name="DersId" />
+    </Key>
+    <Property Name="DersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DersAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DersKodu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Kredi" Type="Int32" />
+    <Property Name="BolumId" Type="Int32" />
+    <Property Name="AktifPasif" Type="Int16" />
+    <NavigationProperty Name="Bolum" Relationship="OBSModel.FK_Ders_Bolum" FromRole="Ders" ToRole="Bolum" />
+    <NavigationProperty Name="Ogretmen_Ogrenci_Ders" Relationship="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ders" FromRole="Ders" ToRole="Ogretmen_Ogrenci_Ders" />
+  </EntityType>
+  <EntityType Name="Ogrenci">
+    <Key>
+      <PropertyRef Name="OgrId" />
+    </Key>
+    <Property Name="OgrId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OgrNo" Type="Int32" />
+    <Property Name="Ad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Tc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BolumId" Type="Int32" />
+    <Property Name="KayityapanID" Type="Int32" />
+    <Property Name="KayitYapilantarih" Type="DateTime" Precision="0" />
+    <Property Name="DogumTarih" Type="DateTime" Precision="0" />
+    <Property Name="Cinsiyet" Type="Int16" />
+    <Property Name="AktifPasif" Type="Int16" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Bolum" Relationship="OBSModel.FK_Ogrenci_Bolum" FromRole="Ogrenci" ToRole="Bolum" />
+    <NavigationProperty Name="Ogretmen" Relationship="OBSModel.FK_Ogrenci_Ogretmen" FromRole="Ogrenci" ToRole="Ogretmen" />
+  </EntityType>
+  <EntityType Name="Ogretmen">
+    <Key>
+      <PropertyRef Name="OgretmenId" />
+    </Key>
+    <Property Name="OgretmenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OgretmenAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BolumId" Type="Int32" />
+    <NavigationProperty Name="Bolum" Relationship="OBSModel.FK_Ogretmen_Bolum" FromRole="Ogretmen" ToRole="Bolum" />
+    <NavigationProperty Name="Ogrenci" Relationship="OBSModel.FK_Ogrenci_Ogretmen" FromRole="Ogretmen" ToRole="Ogrenci" />
+    <NavigationProperty Name="Ogretmen_Ogrenci_Ders" Relationship="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ogretmen" FromRole="Ogretmen" ToRole="Ogretmen_Ogrenci_Ders" />
+  </EntityType>
+  <EntityType Name="Ogretmen_Ogrenci_Ders">
+    <Key>
+      <PropertyRef Name="Ogretmen_Ogrenci_DersID" />
+    </Key>
+    <Property Name="Ogretmen_Ogrenci_DersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ogrt_Ogr_ID" Type="Int32" />
+    <Property Name="DersID" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="Vize1" Type="Int32" />
+    <Property Name="Vize2" Type="Int32" />
+    <Property Name="Final" Type="Int32" />
+    <NavigationProperty Name="Ders" Relationship="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ders" FromRole="Ogretmen_Ogrenci_Ders" ToRole="Ders" />
+    <NavigationProperty Name="Ogretmen" Relationship="OBSModel.FK_Ogretmen_Ogrenci_Ders_Ogretmen" FromRole="Ogretmen_Ogrenci_Ders" ToRole="Ogretmen" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Ogrt_ogrID" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Ders_Bolum">
+    <End Type="OBSModel.Bolum" Role="Bolum" Multiplicity="0..1" />
+    <End Type="OBSModel.Ders" Role="Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ders">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogrenci_Bolum">
+    <End Type="OBSModel.Bolum" Role="Bolum" Multiplicity="0..1" />
+    <End Type="OBSModel.Ogrenci" Role="Ogrenci" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ogrenci">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Bolum">
+    <End Type="OBSModel.Bolum" Role="Bolum" Multiplicity="0..1" />
+    <End Type="OBSModel.Ogretmen" Role="Ogretmen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolum">
+        <PropertyRef Name="BolumId" />
+      </Principal>
+      <Dependent Role="Ogretmen">
+        <PropertyRef Name="BolumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Ogrenci_Ders_Ders">
+    <End Type="OBSModel.Ders" Role="Ders" Multiplicity="0..1" />
+    <End Type="OBSModel.Ogretmen_Ogrenci_Ders" Role="Ogretmen_Ogrenci_Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ders">
+        <PropertyRef Name="DersId" />
+      </Principal>
+      <Dependent Role="Ogretmen_Ogrenci_Ders">
+        <PropertyRef Name="DersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogrenci_Ogretmen">
+    <End Type="OBSModel.Ogretmen" Role="Ogretmen" Multiplicity="0..1" />
+    <End Type="OBSModel.Ogrenci" Role="Ogrenci" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogretmen">
+        <PropertyRef Name="OgretmenId" />
+      </Principal>
+      <Dependent Role="Ogrenci">
+        <PropertyRef Name="KayityapanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogretmen_Ogrenci_Ders_Ogretmen">
+    <End Type="OBSModel.Ogretmen" Role="Ogretmen" Multiplicity="0..1" />
+    <End Type="OBSModel.Ogretmen_Ogrenci_Ders" Role="Ogretmen_Ogrenci_Ders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogretmen">
+        <PropertyRef Name="OgretmenId" />
+      </Principal>
+      <Dependent Role="Ogretmen_Ogrenci_Ders">
+        <PropertyRef Name="Ogrt_Ogr_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
